@@ -206,6 +206,8 @@ export class ComelitVedoPlatform implements DynamicPlatformPlugin {
         night_areas: area_mapping.away_areas ? [...area_mapping.away_areas] : [],
       };
       const accessory = this.createHapAccessory('VEDO Alarm', Categories.SECURITY_SYSTEM);
+      this.log.debug('VEDO_JSON:');
+      this.log.debug(JSON.stringify(config));
       this.alarm = new VedoAlarm(
         this,
         accessory,
