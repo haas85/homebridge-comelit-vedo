@@ -283,7 +283,28 @@ export class VedoClient {
       .filter(a => a !== null);
   }
 
-  async arm(uid: string, area: number, force: boolean = true, scene: string = 'tot') {
+  async arm(uid: string, area: number, force: boolean = true, scene: string = 'tot', logger?: any) {
+    if (logger) {
+      logger(uid);
+      logger(area);
+      logger(force);
+      logger(scene);
+      logger(
+        JSON.stringify({
+          params: {
+            force: force ? '1' : '0',
+            vedo: '1',
+            [scene]: area,
+            _: new Date().getTime(),
+          },
+          headers: {
+            Cookie: uid,
+            'X-Requested-With': 'XMLHttpRequest',
+            Accept: '*/*',
+          },
+        })
+      );
+    }
     const resp = await axios.get<any>(`${this.address}${this.config.action}`, {
       params: {
         force: force ? '1' : '0',

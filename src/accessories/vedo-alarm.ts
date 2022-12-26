@@ -57,7 +57,7 @@ export class VedoAlarm {
       : [];
     this.home_areas = config.home_areas ? config.home_areas.map(a => a.toLowerCase().trim()) : [];
     this.lastLogin = 0;
-    this.log.debug('Mapping areas set to ', this.night_areas, this.away_areas, this.home_areas);
+    this.log.info('Mapping areas set to ', this.night_areas, this.away_areas, this.home_areas);
     this.getAvailableServices();
   }
 
@@ -242,7 +242,7 @@ export class VedoAlarm {
       Characteristic.SecuritySystemTargetState.AWAY_ARM,
     ];
 
-    if (this.night_areas.length) {
+    if (this.night_areas.length || true) {
       validValues.push(Characteristic.SecuritySystemTargetState.NIGHT_ARM);
     }
 
@@ -284,7 +284,7 @@ export class VedoAlarm {
         return indexes;
       }
     }
-    await this.client.arm(uid, ALL);
+    await this.client.arm(uid, ALL, undefined, scene);
     return [ALL];
   }
 
