@@ -5,7 +5,7 @@ import {
   VedoClientConfig,
   ZoneDesc,
   ZoneStatus,
-} from '../comelit-client';
+} from '../comelit-client/src';
 import { intersection } from 'lodash';
 import { Callback, CharacteristicEventTypes, Logger, PlatformAccessory, Service } from 'homebridge';
 import { ComelitVedoPlatform } from '../comelit-vedo-platform';

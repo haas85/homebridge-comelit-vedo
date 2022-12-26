@@ -1,4 +1,4 @@
-import { ZoneStatus } from 'comelit-client';
+import { ZoneStatus } from '../comelit-client/src';
 import { Callback, CharacteristicEventTypes, Logger, PlatformAccessory, Service } from 'homebridge';
 import client from 'prom-client';
 import { ComelitVedoPlatform } from '../comelit-vedo-platform';
