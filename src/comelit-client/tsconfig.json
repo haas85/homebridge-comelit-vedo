@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "allowJs": false,
+    "strict": false,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  "lib": ["esnext"],
+  "include": ["src"],
+  "exclude": ["**/__tests__/*"]
+}

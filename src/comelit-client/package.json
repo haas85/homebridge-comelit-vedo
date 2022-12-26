@@ -1,0 +1,70 @@
+{
+  "name": "comelit-client",
+  "version": "2.1.0",
+  "author": "Pierpaolo Follia",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madchicken/comelit-client"
+  },
+  "description": "Comelit HUB CLI interface",
+  "license": "Apache-2.0",
+  "keywords": [
+    "comelit",
+    "cli",
+    "hub",
+    "serial bus",
+    "vedo"
+  ],
+  "engines": {
+    "node": ">11.10.0"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn clean && yarn build-ts && yarn lint",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "lint": "tsc --noEmit && eslint \"src/*.{js,ts}\" --quiet --fix",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write \"{src/,__{tests,mocks}__}/**/*.ts\"",
+    "test": "jest",
+    "clean": "rimraf dist/"
+  },
+  "dependencies": {
+    "async-mqtt": "2.6.1",
+    "axios": "0.19.2",
+    "chalk": "3.0.0",
+    "lodash": "4.17.19",
+    "mqtt": "4.1.0",
+    "mqtt-packet": "6.3.2",
+    "querystring": "0.2.0",
+    "typescript": "3.9.7",
+    "yargs": "15.4.1"
+  },
+  "bin": {
+    "comelit": "./dist/bin/comelit-cli.js",
+    "comelit-sb": "./dist/bin/comelit-sb-cli.js",
+    "vedo": "./dist/bin/vedo-cli.js"
+  },
+  "devDependencies": {
+    "@types/chalk": "2.2.0",
+    "@types/lodash": "4.14.157",
+    "@types/mqtt": "2.5.0",
+    "@types/node": "12.12.6",
+    "@types/yargs": "15.0.5",
+    "@types/jest": "25.1.4",
+    "@types/nock": "11.1.0",
+    "@typescript-eslint/eslint-plugin": "2.14.0",
+    "@typescript-eslint/parser": "2.14.0",
+    "@types/axios": "0.14.0",
+    "eslint": "7.5.0",
+    "eslint-config-prettier": "6.11.0",
+    "prettier": "2.0.5",
+    "rimraf": "3.0.2",
+    "jest": "25.1.0",
+    "ts-jest": "25.2.1",
+    "nock": "12.0.2"
+  }
+}
