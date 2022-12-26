@@ -5,7 +5,7 @@ import {
   VedoClientConfig,
   ZoneDesc,
   ZoneStatus,
-} from 'comelit-client';
+} from '../comelit-client';
 import { intersection } from 'lodash';
 import { Callback, CharacteristicEventTypes, Logger, PlatformAccessory, Service } from 'homebridge';
 import { ComelitVedoPlatform } from '../comelit-vedo-platform';
@@ -271,7 +271,7 @@ export class VedoAlarm {
     return [accessoryInformation, this.securityService];
   }
 
-  private async armAreas(areas: string[], uid: string): Promise<number[]> {
+  private async armAreas(areas: string[], uid: string, scene?: string): Promise<number[]> {
     this.log.info(`Arming system: ${areas.length ? areas.join(', ') : 'ALL SYSTEM'}`);
     const alarmAreas = await this.client.findActiveAreas(uid);
     if (areas && areas.length) {
@@ -279,7 +279,7 @@ export class VedoAlarm {
         .map(area => alarmAreas.findIndex(a => a.description.toLowerCase() === area))
         .filter(index => index !== -1);
       if (indexes.length) {
-        const promises = indexes.map(index => this.client.arm(uid, index));
+        const promises = indexes.map(index => this.client.arm(uid, index, undefined, scene));
         await Promise.all(promises);
         return indexes;
       }
@@ -325,8 +325,8 @@ export class VedoAlarm {
             callback();
             break;
           case Characteristic.SecuritySystemTargetState.NIGHT_ARM:
-            this.log.info('Arm system: NIGHT');
-            await this.armAreas(this.night_areas, uid);
+            this.log.info('Arm system: NIGHT (P1)');
+            await this.armAreas(this.night_areas, uid, 'p1');
             callback();
             break;
           case Characteristic.SecuritySystemTargetState.STAY_ARM:
