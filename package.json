@@ -24,7 +24,8 @@
     "config.schema.json"
   ],
   "scripts": {
-    "build": "yarn clean && yarn build-ts",
+    "build-yarn": "yarn clean && yarn build-ts",
+    "build": "npm run clean && npm run build-ts",
     "test": "jest --forceExit --coverage --verbose",
     "watch-test": "yarn run test -- --watchAll",
     "build-ts": "tsc",
