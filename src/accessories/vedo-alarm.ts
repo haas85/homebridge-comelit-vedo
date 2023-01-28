@@ -35,6 +35,7 @@ export class VedoAlarm {
   private readonly home_areas: string[];
   private zones: ZoneDesc;
   private areas: AreaDesc;
+  private armedScene: string;
 
   constructor(
     platform: ComelitVedoPlatform,
@@ -57,6 +58,7 @@ export class VedoAlarm {
       : [];
     this.home_areas = config.home_areas ? config.home_areas.map(a => a.toLowerCase().trim()) : [];
     this.lastLogin = 0;
+    this.armedScene = null;
     this.log.info('Mapping areas set to ', this.night_areas, this.away_areas, this.home_areas);
     this.getAvailableServices();
   }
@@ -102,7 +104,8 @@ export class VedoAlarm {
     if (statusArmed) {
       if (
         this.away_areas.length &&
-        intersection(armedAreas, this.away_areas).length === armedAreas.length
+        intersection(armedAreas, this.away_areas).length === armedAreas.length &&
+        !this.armedScene
       ) {
         this.log.debug('Setting new status to AWAY_ARM');
         this.securityService.updateCharacteristic(
@@ -115,7 +118,8 @@ export class VedoAlarm {
         );
       } else if (
         this.home_areas.length &&
-        intersection(armedAreas, this.home_areas).length === armedAreas.length
+        intersection(armedAreas, this.home_areas).length === armedAreas.length &&
+        !this.armedScene
       ) {
         this.log.debug('Setting new status to STAY_ARM');
         this.securityService.updateCharacteristic(
@@ -127,8 +131,9 @@ export class VedoAlarm {
           Characteristic.SecuritySystemTargetState.STAY_ARM
         );
       } else if (
-        this.night_areas.length &&
-        intersection(armedAreas, this.night_areas).length === armedAreas.length
+        this.armedScene === 'p1'
+        // this.night_areas.length &&
+        // intersection(armedAreas, this.night_areas).length === armedAreas.length
       ) {
         this.log.debug('Setting new status to NIGHT_ARM');
         this.securityService.updateCharacteristic(
@@ -285,6 +290,7 @@ export class VedoAlarm {
       }
     }
     await this.client.arm(uid, ALL, undefined, scene);
+    this.armedScene = scene;
     return [ALL];
   }
 
@@ -316,6 +322,7 @@ export class VedoAlarm {
         switch (value) {
           case Characteristic.SecuritySystemTargetState.DISARM:
             this.log.info('Disarming system');
+            this.armedScene = null;
             await this.client.disarm(uid, ALL);
             callback();
             break;
