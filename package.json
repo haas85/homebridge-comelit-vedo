@@ -50,9 +50,7 @@
     "mqtt": "4.1.0",
     "mqtt-packet": "6.3.2",
     "querystring": "0.2.0",
-    "yargs": "15.4.1"
-  },
-  "devDependencies": {
+    "yargs": "15.4.1",
     "@types/express": "^4.17.2",
     "@types/lodash": "^4.14.149",
     "@types/node": "^11.15.3",
@@ -75,5 +73,6 @@
     "@types/nock": "11.1.0",
     "@types/axios": "0.14.0",
     "ts-jest": "25.2.1"
-  }
+  },
+  "devDependencies": {}
 }
